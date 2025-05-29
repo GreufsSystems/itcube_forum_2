@@ -1,0 +1,32 @@
+<!-- _user_list.html -->
+<div class="topic-card text-center animate-fadein">
+    <h3 class="h5 mb-3">
+        <i class="fa-solid {{ icon }}"></i> {{ title }}
+    </h3>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+        {% for user in users %}
+        <a href="{{ url_for('view_user_profile', user_id=user.id) }}" class="text-decoration-none">
+            <div class="d-flex align-items-center gap-2 bg-light rounded-pill px-3 py-1 shadow-sm"
+                 title="{{ user.first_name }} {{ user.last_name }} ({{ role if role else 'Пользователь' }})">
+                {% if user.avatar_url %}
+                    <img src="{{ url_for('static', filename='avatars/' ~ user.avatar_url) }}"
+                         alt="Аватар"
+                         class="profile-avatar-mini"
+                         style="object-fit:cover; width:32px; height:32px; border-radius:50%;">
+                {% else %}
+                    <div class="profile-avatar-mini bg-primary text-white fw-bold"
+                         style="width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                        {{ user.first_name[0] }}{{ user.last_name[0] if user.last_name }}
+                    </div>
+                {% endif %}
+                <span class="d-inline-block text-truncate text-light" style="max-width: 120px;">
+                    {{ user.first_name }} {{ user.last_name }}
+                </span>
+                {% if user['about'] %}
+                <div class="small text-muted text-start" style="max-width: 180px; white-space:pre-line;">{{ user['about'] }}</div>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div> 

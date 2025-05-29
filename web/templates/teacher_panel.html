@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block title %}Панель преподавателя - Форум IT-Cube62{% endblock %}
+{% block content %}
+<style>
+  /* Подсветка активной вкладки как в админпанели */
+  .nav-tabs .nav-link.active {
+    color: #90baff !important;
+    background: #181d23 !important;
+    border: none !important;
+    border-bottom: 4px solid #90baff !important;
+    box-shadow: 0 4px 16px 0 #90baff33;
+    font-weight: 600;
+    transition: border-bottom 0.2s, color 0.2s;
+  }
+  .nav-tabs .nav-link {
+    border: none !important;
+    color: #b0b8c9 !important;
+    background: #181d23 !important;
+    margin-right: 2px;
+  }
+  .nav-tabs {
+    border-bottom: none !important;
+  }
+</style>
+<div class="container py-4 animate-fadein">
+  <div class="card shadow mb-4 bg-dark text-light border-0">
+    <div class="card-body">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <h2 class="fw-bold mb-0 text-light"><i class="fa-solid fa-chalkboard-user text-primary"></i> Панель преподавателя</h2>
+        <span class="badge bg-primary fs-6">Ваше направление: <b>{{ direction }}</b></span>
+      </div>
+      {% if message %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}
+      <ul class="nav nav-tabs mb-4 border-0" id="teacherPanelTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active bg-dark text-light border-0" id="keys-tab" data-bs-toggle="tab" data-bs-target="#keys" type="button" role="tab" aria-controls="keys" aria-selected="true">
+            <i class="fa-solid fa-key"></i> Ключи
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link bg-dark text-light border-0" id="topics-tab" data-bs-toggle="tab" data-bs-target="#topics" type="button" role="tab" aria-controls="topics" aria-selected="false">
+            <i class="fa-solid fa-list"></i> Темы
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link bg-dark text-light border-0" id="files-tab" data-bs-toggle="tab" data-bs-target="#files" type="button" role="tab" aria-controls="files" aria-selected="false">
+            <i class="fa-solid fa-file"></i> Файлы
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content" id="teacherPanelTabsContent">
+        <!-- Ключи -->
+        <div class="tab-pane fade show active" id="keys" role="tabpanel" aria-labelledby="keys-tab">
+          <form method="post" class="row g-2 align-items-end mb-4">
+            <div class="col-md-3">
+              <input type="text" class="form-control bg-dark text-light border-secondary" name="first_name" placeholder="Имя" required>
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-control bg-dark text-light border-secondary" name="last_name" placeholder="Фамилия" required>
+            </div>
+            <div class="col-md-3">
+              <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-plus"></i> Сгенерировать ключ</button>
+            </div>
+          </form>
+          <div class="card mb-3 bg-secondary bg-opacity-10 border-0">
+            <div class="card-header bg-dark text-light border-0"><i class="fa-solid fa-key text-primary"></i> Ваши ключи</div>
+            <ul class="list-group list-group-flush">
+              {% if keys %}
+                {% for k in keys %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-0">
+                    <span class="fw-monospace">{{ k.key }}</span>
+                    <span class="text-muted">{{ k.first_name }} {{ k.last_name }}</span>
+                  </li>
+                {% endfor %}
+              {% else %}
+                <li class="list-group-item text-muted bg-dark border-0">Нет сгенерированных ключей</li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+        <!-- Темы -->
+        <div class="tab-pane fade" id="topics" role="tabpanel" aria-labelledby="topics-tab">
+          <form method="post" class="mb-4">
+            <div class="row g-2 align-items-end">
+              <div class="col-md-8">
+                <input type="text" class="form-control bg-dark text-light border-secondary" name="topic_title" placeholder="Заголовок темы" required>
+              </div>
+              <div class="col-md-8 mt-2">
+                <textarea class="form-control bg-dark text-light border-secondary" name="topic_text" placeholder="Текст темы" rows="2" required></textarea>
+              </div>
+              <div class="col-md-4 mt-2">
+                <button type="submit" class="btn btn-success w-100"><i class="fa-solid fa-plus"></i> Создать тему</button>
+              </div>
+            </div>
+          </form>
+          <div class="card bg-secondary bg-opacity-10 border-0">
+            <div class="card-header bg-dark text-light border-0"><i class="fa-solid fa-list text-primary"></i> Ваши темы</div>
+            <ul class="list-group list-group-flush">
+              {% if topics %}
+                {% for t in topics|sort(attribute='title') %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-0">
+                    <span>{{ t.title }}</span>
+                    <span class="badge bg-secondary">ID: {{ t.id }}</span>
+                  </li>
+                {% endfor %}
+              {% else %}
+                <li class="list-group-item text-muted bg-dark border-0">Нет созданных тем</li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+        <!-- Файлы -->
+        <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
+          <form method="post" enctype="multipart/form-data" class="row g-2 align-items-end mb-4">
+            <div class="col-md-6">
+              <input type="file" class="form-control bg-dark text-light border-secondary" name="file" required>
+            </div>
+            <div class="col-md-3">
+              <button type="submit" class="btn btn-outline-primary w-100"><i class="fa-solid fa-upload"></i> Загрузить файл</button>
+            </div>
+          </form>
+          <div class="card bg-secondary bg-opacity-10 border-0">
+            <div class="card-header bg-dark text-light border-0"><i class="fa-solid fa-file text-primary"></i> Ваши файлы</div>
+            <ul class="list-group list-group-flush">
+              {% if files %}
+                {% for f in files|sort(attribute='name') %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light border-0">
+                    <span>{{ f.name }}</span>
+                    <span class="badge bg-secondary">ID: {{ f.id if f.id else '' }}</span>
+                  </li>
+                {% endfor %}
+              {% else %}
+                <li class="list-group-item text-muted bg-dark border-0">Нет загруженных файлов</li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  // Bootstrap 5 tabs auto-activation on click
+  var triggerTabList = [].slice.call(document.querySelectorAll('#teacherPanelTabs button'));
+  triggerTabList.forEach(function (triggerEl) {
+    var tabTrigger = new bootstrap.Tab(triggerEl);
+    triggerEl.addEventListener('click', function (event) {
+      event.preventDefault();
+      tabTrigger.show();
+    });
+  });
+</script>
+{% endblock %} 

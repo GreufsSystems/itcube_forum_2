@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Привязка Telegram - Форум IT-Cube62{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height:60vh;">
+  <div class="topic-card p-4 animate-fadein" style="max-width:420px;width:100%;">
+    <div class="text-center mb-4">
+      <i class="fa-brands fa-telegram fa-3x text-primary mb-2"></i>
+      <h2 class="fw-bold mb-2">Привязка Telegram</h2>
+      <p class="text-muted mb-0">Скопируйте код и отправьте его боту в Telegram для привязки аккаунта.</p>
+    </div>
+    {% if binding_code %}
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" id="bindCode" value="{{ binding_code }}" readonly>
+      <button class="btn btn-outline-secondary" type="button" onclick="navigator.clipboard.writeText(document.getElementById('bindCode').value)"><i class="fa-solid fa-copy"></i></button>
+    </div>
+    <div class="alert alert-info text-center">
+      Отправьте <b>/bind {{ binding_code }}</b> боту <a href="https://t.me/{{ bot_username|replace('@','') }}" target="_blank">{{ bot_username }}</a>
+    </div>
+    {% else %}
+    <form method="post">
+      <button type="submit" class="btn btn-primary w-100">Сгенерировать код</button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Чат с ИИ</h5>
+                    <button class="btn btn-sm btn-outline-danger" onclick="clearChat()">Очистить чат</button>
+                </div>
+                <div class="card-body">
+                    <div id="chat-messages" class="mb-3" style="height: 400px; overflow-y: auto;">
+                        <!-- Сообщения будут добавляться здесь -->
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="message-input" class="form-control" placeholder="Введите ваше сообщение...">
+                        <button class="btn btn-primary" onclick="sendMessage()">Отправить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function addMessage(content, isUser = false) {
+    const messagesDiv = document.getElementById('chat-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${isUser ? 'user-message' : 'assistant-message'} mb-2`;
+    
+    const messageContent = document.createElement('div');
+    messageContent.className = 'p-2 rounded';
+    messageContent.style.backgroundColor = isUser ? '#e3f2fd' : '#f5f5f5';
+    messageContent.style.maxWidth = '80%';
+    messageContent.style.marginLeft = isUser ? 'auto' : '0';
+    messageContent.style.marginRight = isUser ? '0' : 'auto';
+    messageContent.textContent = content;
+    
+    messageDiv.appendChild(messageContent);
+    messagesDiv.appendChild(messageDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+async function sendMessage() {
+    const input = document.getElementById('message-input');
+    const message = input.value.trim();
+    
+    if (!message) return;
+    
+    // Добавляем сообщение пользователя
+    addMessage(message, true);
+    input.value = '';
+    
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message }),
+        });
+        
+        const data = await response.json();
+        
+        if (data.error) {
+            addMessage('Ошибка: ' + data.error);
+        } else {
+            addMessage(data.response);
+        }
+    } catch (error) {
+        addMessage('Произошла ошибка при отправке сообщения');
+    }
+}
+
+async function clearChat() {
+    try {
+        await fetch('/api/chat/clear', {
+            method: 'POST',
+        });
+        document.getElementById('chat-messages').innerHTML = '';
+    } catch (error) {
+        addMessage('Ошибка при очистке чата');
+    }
+}
+
+// Обработка нажатия Enter
+document.getElementById('message-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+});
+</script>
+
+<style>
+.message {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.assistant-message {
+    justify-content: flex-start;
+}
+
+#chat-messages {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+</style>
+{% endblock %} 

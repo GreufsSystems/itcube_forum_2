@@ -1,0 +1,33 @@
+Чтобы развернуть локальный DNS-сервер на Windows для тестовых доменов (например, itcubeforum62.ru), вы можете использовать бесплатные и простые решения, такие как Acrylic DNS Proxy или Simple DNS Plus (trial), либо поднять DNS-сервер на базе Linux (например, с помощью BIND или dnsmasq).
+Самый простой способ для Windows — Acrylic DNS Proxy
+1. Скачайте и установите Acrylic DNS Proxy
+Официальный сайт: https://mayakron.altervista.org/wikibase/show.php?id=AcrylicHome
+2. Добавьте свои домены
+Откройте файл AcrylicHosts.txt (обычно находится в папке установки Acrylic, например, C:\Program Files\Acrylic DNS Proxy\AcrylicHosts.txt).
+Добавьте строку:
+Apply to hosts
+Сохраните файл.
+3. Перезапустите службу Acrylic DNS Proxy
+Через меню Пуск найдите "Acrylic DNS Proxy" → "Restart Acrylic Service".
+4. Укажите Acrylic как DNS-сервер в настройках сети
+Откройте настройки сетевого адаптера.
+В свойствах IPv4 укажите DNS-сервер:
+Apply to hosts
+Сохраните настройки.
+5. Проверьте
+Откройте командную строку и выполните:
+Apply to hosts
+Должен вернуться адрес 127.0.0.1.
+Альтернатива: dnsmasq (через WSL или Docker)
+Если у вас установлен WSL или Docker, можно поднять dnsmasq:
+Пример для WSL:
+Apply to hosts
+Run
+Потом в настройках Windows укажите DNS 127.0.0.1.
+Альтернатива: PowerShell DNS-сервер (только для тестов, не для продакшена)
+Есть простые скрипты на PowerShell, например:
+https://github.com/loic-sharma/powershell-dns-server
+Итог
+Рекомендую Acrylic DNS Proxy — это быстро, удобно и не требует Linux/WSL.
+Если хотите, могу дать пошаговую инструкцию по установке и настройке Acrylic DNS Proxy или другого решения.
+Нужно подробное руководство? Если да — для какого варианта?

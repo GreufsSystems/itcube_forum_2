@@ -1,0 +1,64 @@
+<div class="teacher-panel-card">
+    <div class="teacher-panel-title">
+        <svg width="32" height="32" fill="none" stroke="#90baff" stroke-width="2"><path d="M6 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12"></path><circle cx="12" cy="16" r="4"></circle><path d="M18 20v2a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-2"></path></svg>
+        Панель преподавателя
+    </div>
+    <div class="teacher-badge">
+        <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><path d="M8 12v-2a4 4 0 1 1 8 0v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Ваше направление: {{ direction }}
+    </div>
+    <div class="teacher-tabs">
+        <button class="teacher-tab active"><svg width="18" height="18" fill="none" stroke="#90baff" stroke-width="2"><path d="M5 12h14M5 6h14M5 18h14"></path></svg> Ключи</button>
+        <button class="teacher-tab"><svg width="18" height="18" fill="none" stroke="#90baff" stroke-width="2"><circle cx="9" cy="9" r="7"></circle></svg> Темы</button>
+        <button class="teacher-tab"><svg width="18" height="18" fill="none" stroke="#90baff" stroke-width="2"><rect x="3" y="3" width="12" height="12" rx="2"></rect></svg> Файлы</button>
+    </div>
+    <form class="teacher-panel-filters" method="get">
+        <input type="text" name="first_name" placeholder="Имя">
+        <input type="text" name="last_name" placeholder="Фамилия">
+        <button type="submit" class="btn">
+            <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
+            Сгенерировать ключ
+        </button>
+    </form>
+    <div class="teacher-keys-card">
+        <div class="teacher-keys-title">
+            <svg width="18" height="18" fill="none" stroke="#90baff" stroke-width="2"><path d="M7 10V7a5 5 0 1 1 10 0v3"></path><circle cx="12" cy="15" r="3"></circle></svg>
+            Ваши ключи
+        </div>
+        {% for key, label in keys %}
+        <div class="teacher-key-row">
+            <span>{{ key }}</span>
+            <span class="teacher-key-label">{{ label }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Кнопка для открытия модального окна -->
+<button id="open-activate-modal" class="btn btn-primary" style="margin-bottom: 24px;">Активировать ключ</button>
+
+<!-- Модальное окно для активации ключа -->
+<div id="activate-modal" class="modal-custom" style="display:none;">
+    <button class="close" id="close-activate-modal">&times;</button>
+    <h2>Активировать ключ</h2>
+    <form>
+        <label for="key-input">Ключ</label>
+        <input type="text" id="key-input" class="form-control" placeholder="Введите ключ">
+        <button type="submit" class="btn btn-primary" style="margin-top:24px;width:100%;">Активировать</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('open-activate-modal').onclick = function() {
+    document.getElementById('activate-modal').style.display = 'block';
+};
+document.getElementById('close-activate-modal').onclick = function() {
+    document.getElementById('activate-modal').style.display = 'none';
+};
+window.onclick = function(event) {
+    let modal = document.getElementById('activate-modal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+};
+</script> 

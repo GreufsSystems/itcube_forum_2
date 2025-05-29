@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Ошибка сервера - Форум IT-Cube62{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height:70vh;">
+  <div class="topic-card text-center animate-fadein" style="max-width:420px;width:100%;">
+    <div class="mb-4">
+      <i class="fa-solid fa-bug fa-4x text-danger mb-3"></i>
+      <h1 class="fw-bold mb-2">500</h1>
+      <p class="lead text-muted mb-3">Внутренняя ошибка сервера</p>
+      <a href="{{ url_for('home') }}" class="btn btn-primary px-4 py-2"><i class="fa-solid fa-home"></i> На главную</a>
+    </div>
+  </div>
+</div>
+{% endblock %} 

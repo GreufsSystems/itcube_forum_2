@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Технические работы{% endblock %}
+{% block content %}
+<div class="container py-5 text-center">
+    <h1 class="display-4 text-warning"><i class="fas fa-tools"></i> Технические работы</h1>
+    <p class="lead mt-4">Платформа временно недоступна. <br>Пожалуйста, попробуйте позже.</p>
+    <img src="{{ url_for('static', filename='gifs/sleep.gif') }}" alt="Сон" style="width: 150px; margin: 30px 0 20px 0;">
+</div>
+{% endblock %} 

@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+{% block title %}Профиль - Форум IT-Cube62{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height:60vh;">
+  <div class="profile-card animate-fadein position-relative" style="max-width:950px;width:100%;padding:40px 40px 32px 40px;box-shadow:0 8px 32px rgba(98,98,255,0.10);border-radius:28px;background:var(--card-bg);">
+    <div class="d-flex flex-row flex-wrap align-items-stretch gap-4 mb-4">
+      <!-- Левая колонка -->
+      <div class="d-flex flex-column align-items-center justify-content-start p-4" style="min-width:260px;max-width:320px;flex:1 1 260px;background:rgba(0,0,0,0.10);border-radius:20px;">
+      {% if is_viewing_own_profile %}
+        <form method="post" enctype="multipart/form-data" id="avatarForm" style="display:inline-block;">
+          <div class="profile-avatar" style="position:relative; cursor:pointer; width:120px; height:120px; background:#23272e; display:flex; align-items:center; justify-content:center; margin-bottom:18px;" onmouseenter="this.querySelector('.avatar-upload-btn').style.display='flex'" onmouseleave="this.querySelector('.avatar-upload-btn').style.display='none'">
+          {% if user.avatar_url %}
+            <img src="{{ url_for('static', filename='avatars/' ~ user.avatar_url) }}" alt="Аватар" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          {% else %}
+              <span style="font-size:2.5rem;line-height:120px;">{{ user.first_name[0] if user.first_name }}{{ user.last_name[0] if user.last_name }}</span>
+          {% endif %}
+          <input type="file" name="avatar" id="avatarInput" accept="image/*" style="display:none" onchange="document.getElementById('avatarForm').submit();">
+          <span class="avatar-upload-btn" style="display:none; position:absolute; bottom:8px; right:8px; background:rgba(0,0,0,0.65); border-radius:50%; padding:7px; align-items:center; justify-content:center; cursor:pointer;">
+              <i class="fa-solid fa-pen text-white" onclick="document.getElementById('avatarInput').click(); event.stopPropagation();" title="Загрузить аватар"></i>
+          </span>
+        </div>
+      </form>
+      {% else %}
+        <div class="profile-avatar" style="width:120px;height:120px;background:#23272e;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+        {% if user.avatar_url %}
+          <img src="{{ url_for('static', filename='avatars/' ~ user.avatar_url) }}" alt="Аватар" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+        {% else %}
+            <span style="font-size:2.5rem;line-height:120px;">{{ user.first_name[0] if user.first_name }}{{ user.last_name[0] if user.last_name }}</span>
+          {% endif %}
+        </div>
+        {% endif %}
+        <h2 class="fw-bold mb-1 text-center mt-2" style="font-size:1.7rem;">{{ user.first_name }} {{ user.last_name }}</h2>
+        <div class="text-muted mb-1 text-center">@{{ user.username }}</div>
+        <span class="badge bg-secondary mb-2" style="font-size:1.1em;">{% if user.role == 'user' %}Ученик{% elif user.role == 'teacher' %}Преподаватель{% elif user.role == 'admin' %}Админ{% else %}{{ user.role|capitalize }}{% endif %}</span>
+      </div>
+      <!-- Правая колонка -->
+      <div class="flex-grow-1 d-flex flex-column justify-content-start">
+        <h3 class="fw-bold mb-3 text-center text-lg-start" style="font-size:2.1rem;">Настройки аккаунта</h3>
+        <div class="p-4 bg-dark bg-opacity-75 rounded-4 shadow-sm" style="min-width:260px;">
+          <table class="table table-borderless mb-0" style="color:#fff;">
+            <tbody>
+              <tr><td class="text-muted">Имя/Никнейм</td><td class="fw-bold">{{ user.first_name }} {{ user.last_name }}</td></tr>
+              {% if is_viewing_own_profile %}
+              <tr><td class="text-muted">Telegram</td><td>{% if telegram_binding %}<b>{{ telegram_binding.telegram_username or telegram_binding.telegram_id }}</b>{% else %}—{% endif %}</td></tr>
+      {% endif %}
+              <tr><td class="text-muted">Роль</td><td>{{ user.role|capitalize }}</td></tr>
+              <tr><td class="text-muted">Направления</td><td>{% for d in user_directions %}{{ d }}{% if not loop.last %}, {% endif %}{% endfor %}</td></tr>
+              <tr><td class="text-muted">О себе</td><td>{{ user.about or '—' }}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% if message %}
+      <div class="alert alert-info">{{ message }}</div>
+    {% endif %}
+    <div class="d-flex flex-wrap gap-3 justify-content-center mt-4">
+    {% if is_viewing_own_profile %}
+        <a href="#" id="open-edit-profile-modal" class="btn btn-outline-primary profile-btn">Редактировать профиль</a>
+        <button id="open-telegram-modal" class="btn btn-outline-primary profile-btn" type="button">
+          <i class="fab fa-telegram"></i> Привязать Telegram
+        </button>
+        <button id="open-password-modal" class="btn btn-secondary profile-btn">Сменить пароль</button>
+        <button type="button" id="open-activate-modal" class="btn btn-primary profile-btn">Активировать ключ</button>
+        <a href="{{ url_for('logout') }}" class="btn btn-lg btn-logout profile-btn">Выйти</a>
+      {% endif %}
+    </div>
+          </div>
+          </div>
+
+<!-- Overlay и модалка редактирования профиля -->
+<div id="edit-profile-modal-overlay" class="modal-overlay" style="display:none;">
+  <div id="edit-profile-modal" class="modal-custom">
+    <button class="close" id="close-edit-profile-modal">&times;</button>
+    <h2>Редактировать профиль</h2>
+    <form method="post" action="{{ url_for('edit_about') }}">
+      <label for="edit-about">О себе</label>
+      <textarea id="edit-about" name="about" class="form-control" rows="3" placeholder="О себе...">{{ user.about if user.about else '' }}</textarea>
+      <button type="submit" class="btn btn-primary" style="margin-top:28px;width:100%;">Сохранить изменения</button>
+    </form>
+          </div>
+        </div>
+
+<!-- Overlay и модалка -->
+<div id="modal-overlay" class="modal-overlay" style="display:none;">
+  <div id="activate-modal" class="modal-custom">
+    <button class="close" id="close-activate-modal">&times;</button>
+    <h2>Активировать ключ</h2>
+    <form method="post">
+      <input type="hidden" name="action" value="activate_key">
+      <label for="key-input">Ключ</label>
+      <input type="text" id="key-input" name="key" class="form-control" placeholder="Введите ключ">
+      <button type="submit" class="btn btn-primary" style="margin-top:24px;width:100%;">Активировать</button>
+      </form>
+    </div>
+          </div>
+
+<!-- Overlay и модалка смены пароля -->
+<div id="password-modal-overlay" class="modal-overlay" style="display:none;">
+  <div id="password-modal" class="modal-custom">
+    <button class="close" id="close-password-modal">&times;</button>
+    <h2>Сменить пароль</h2>
+    <form method="post" action="{{ url_for('change_password') }}">
+      <input type="hidden" name="action" value="change_password">
+      <label for="current-password">Текущий пароль</label>
+      <input type="password" id="current-password" name="current_password" class="form-control" placeholder="Введите текущий пароль" required>
+      <label for="new-password" style="margin-top:18px;">Новый пароль</label>
+      <input type="password" id="new-password" name="new_password" class="form-control" placeholder="Введите новый пароль" required>
+      <label for="confirm-password" style="margin-top:18px;">Подтвердите новый пароль</label>
+      <input type="password" id="confirm-password" name="confirm_password" class="form-control" placeholder="Подтвердите новый пароль" required>
+      <button type="submit" class="btn btn-primary" style="margin-top:28px;width:100%;">Сменить пароль</button>
+    </form>
+          </div>
+        </div>
+
+<style>
+.tg-fade {
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  left: 0; top: 0;
+}
+.tg-fade.tg-active {
+  opacity: 1;
+  pointer-events: auto;
+  position: static;
+}
+#telegram-modal { position: relative; min-height: 260px; }
+</style>
+<!-- Модальное окно Telegram -->
+<div id="telegram-modal-overlay" class="modal-overlay" style="display:none;">
+  <div id="telegram-modal" class="modal-custom" style="max-width:420px;">
+    <button class="close" id="close-telegram-modal" type="button">&times;</button>
+    <!-- Шаг 1: Инструкция -->
+    <div id="tg-step-1">
+      <h2 class="mb-3"><i class="fab fa-telegram text-primary"></i> Привязка Telegram</h2>
+      <p>Для привязки аккаунта Telegram нажмите <b>Далее</b> и следуйте инструкции. Вы получите код, который нужно отправить боту <b>@itcubeauthorization_bot</b> в Telegram.</p>
+      <button type="button" class="btn btn-primary w-100 mt-3" id="tg-next-step">Далее</button>
+    </div>
+    <!-- Шаг 2: Генерация кода -->
+    <div id="tg-step-2" style="display:none;">
+      <h2 class="mb-3">Получить код</h2>
+      <p>Нажмите кнопку ниже, чтобы сгенерировать код для привязки Telegram.</p>
+      <form id="tg-generate-form" method="post" action="{{ url_for('bind_telegram') }}">
+        <button type="submit" class="btn btn-primary w-100 mt-2">Сгенерировать код</button>
+      </form>
+      <button type="button" class="btn btn-outline-primary w-100 mt-3" id="tg-back-step">Назад</button>
+    </div>
+    <!-- Шаг 3: Показ кода -->
+    <div id="tg-step-3" style="display:none;">
+      <h2 class="mb-3">Ваш код</h2>
+      <div class="alert alert-info text-center" style="font-size:1.2em;font-weight:600;">...</div>
+      <div class="text-muted mt-2" style="font-size:0.98em;">
+        Отправьте этот код боту <b>@itcubeauthorization_bot</b> в Telegram для завершения привязки.
+      </div>
+      <button type="button" class="btn btn-outline-primary w-100 mt-3" id="tg-back-step-code">Назад</button>
+    </div>
+    <!-- Шаг 4: Поздравление -->
+    <div id="tg-step-success" style="display:none;">
+      <h2 class="mb-3 text-success"><i class="fa-solid fa-check-circle"></i> Telegram привязан!</h2>
+      <div class="alert alert-success text-center" style="font-size:1.15em;font-weight:600;">
+        Поздравляем! Ваш аккаунт Telegram теперь привязан к профилю.
+      </div>
+      <button type="button" class="btn btn-primary w-100 mt-3" onclick="document.getElementById('telegram-modal-overlay').style.display='none';">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('open-activate-modal').onclick = function() {
+    document.getElementById('modal-overlay').style.display = 'flex';
+};
+document.getElementById('close-activate-modal').onclick = function() {
+    document.getElementById('modal-overlay').style.display = 'none';
+};
+window.onclick = function(event) {
+    let overlay = document.getElementById('modal-overlay');
+    if (event.target === overlay) {
+        overlay.style.display = 'none';
+    }
+};
+
+// Открытие модалки смены пароля
+const openPasswordModal = document.getElementById('open-password-modal');
+const passwordModalOverlay = document.getElementById('password-modal-overlay');
+const closePasswordModal = document.getElementById('close-password-modal');
+if (openPasswordModal && passwordModalOverlay && closePasswordModal) {
+  openPasswordModal.onclick = () => passwordModalOverlay.style.display = 'flex';
+  closePasswordModal.onclick = () => passwordModalOverlay.style.display = 'none';
+  passwordModalOverlay.onclick = (e) => {
+    if (e.target === passwordModalOverlay) passwordModalOverlay.style.display = 'none';
+  };
+}
+
+// Открытие модалки редактирования профиля
+const openEditProfileModal = document.getElementById('open-edit-profile-modal');
+const editProfileModalOverlay = document.getElementById('edit-profile-modal-overlay');
+const closeEditProfileModal = document.getElementById('close-edit-profile-modal');
+if (openEditProfileModal && editProfileModalOverlay && closeEditProfileModal) {
+  openEditProfileModal.onclick = (e) => { e.preventDefault(); editProfileModalOverlay.style.display = 'flex'; };
+  closeEditProfileModal.onclick = () => editProfileModalOverlay.style.display = 'none';
+  editProfileModalOverlay.onclick = (e) => {
+    if (e.target === editProfileModalOverlay) editProfileModalOverlay.style.display = 'none';
+  };
+}
+
+const openTelegramModal = document.getElementById('open-telegram-modal');
+const telegramModalOverlay = document.getElementById('telegram-modal-overlay');
+const closeTelegramModal = document.getElementById('close-telegram-modal');
+const tgStep1 = document.getElementById('tg-step-1');
+const tgStep2 = document.getElementById('tg-step-2');
+const tgStep3 = document.getElementById('tg-step-3');
+const tgStepSuccess = document.getElementById('tg-step-success');
+const tgNextStep = document.getElementById('tg-next-step');
+const tgBackStep = document.getElementById('tg-back-step');
+const tgBackStepCode = document.getElementById('tg-back-step-code');
+const tgGenerateForm = document.getElementById('tg-generate-form');
+function openTelegramStep(step) {
+  if (!telegramModalOverlay) return;
+  telegramModalOverlay.style.display = 'flex';
+  if (tgStep1) tgStep1.style.display = (step === 1) ? 'block' : 'none';
+  if (tgStep2) tgStep2.style.display = (step === 2) ? 'block' : 'none';
+  if (tgStep3) tgStep3.style.display = (step === 3) ? 'block' : 'none';
+  if (tgStepSuccess) tgStepSuccess.style.display = (step === 4) ? 'block' : 'none';
+}
+if (openTelegramModal && telegramModalOverlay && closeTelegramModal) {
+  openTelegramModal.onclick = (e) => { e.preventDefault(); openTelegramStep(1); };
+  closeTelegramModal.onclick = () => telegramModalOverlay.style.display = 'none';
+  telegramModalOverlay.onclick = (e) => {
+    if (e.target === telegramModalOverlay) telegramModalOverlay.style.display = 'none';
+  };
+}
+if (tgNextStep && tgStep1 && tgStep2) {
+  tgNextStep.onclick = () => { openTelegramStep(2); };
+}
+if (tgBackStep && tgStep1 && tgStep2) {
+  tgBackStep.onclick = () => { openTelegramStep(1); };
+}
+if (tgBackStepCode && tgStep3 && tgStep1) {
+  tgBackStepCode.onclick = () => { openTelegramStep(1); };
+}
+if (tgGenerateForm) {
+  tgGenerateForm.onsubmit = async function(e) {
+    e.preventDefault();
+    try {
+      const response = await fetch(tgGenerateForm.action, {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: new FormData(tgGenerateForm)
+      });
+      const data = await response.json();
+      if (data.binding_code) {
+        openTelegramStep(3);
+        if (tgStep3 && tgStep3.querySelector('.alert-info')) {
+          tgStep3.querySelector('.alert-info').textContent = data.binding_code;
+        }
+      } else if (data.tg_success) {
+        openTelegramStep(4);
+      } else if (data.error) {
+        alert(data.error);
+      }
+    } catch (err) {
+      alert('Ошибка при отправке запроса');
+    }
+  };
+}
+</script>
+{% if binding_code %}
+<script>window.addEventListener('DOMContentLoaded', function(){ openTelegramStep(3); });</script>
+{% elif tg_success %}
+<script>window.addEventListener('DOMContentLoaded', function(){ openTelegramStep(4); });</script>
+{% endif %}
+{% endblock %} 

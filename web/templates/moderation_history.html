@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">История модерации {{ 'сообщения' if item_type == 'message' else 'файла' }}</h1>
+
+    <div class="card">
+        <div class="card-body">
+            {% if history %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Модератор</th>
+                                <th>Статус</th>
+                                <th>Комментарий</th>
+                                <th>Дата</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in history %}
+                            <tr>
+                                <td>{{ item.moderator_username }}</td>
+                                <td>
+                                    {% if item.status == 'approved' %}
+                                        <span class="badge bg-success">Одобрено</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Отклонено</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ item.comment or '-' }}</td>
+                                <td>{{ item.moderated_at|datetimeformat }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted">История модерации пуста</p>
+            {% endif %}
+
+            <div class="mt-3">
+                <a href="{{ url_for('moderation_panel') }}" class="btn btn-secondary">
+                    Вернуться к панели модерации
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

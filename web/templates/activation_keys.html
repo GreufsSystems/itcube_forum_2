@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Ключи активации - Форум IT-Cube62{% endblock %}
+{% block content %}
+<div class="container py-4 animate-fadein">
+  <div class="topic-card mb-4">
+    <h2 class="fw-bold mb-3"><i class="fa-solid fa-key text-primary"></i> Ключи активации</h2>
+    {% if message %}
+      <div class="alert alert-info">{{ message }}</div>
+    {% endif %}
+    <form method="post" class="row g-2 align-items-end mb-4">
+      <div class="col-md-4">
+        <select name="direction" class="form-select" required>
+          <option value="">Выберите направление</option>
+          {% for d in directions %}
+          <option value="{{ d }}">{{ d }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Создать ключ</button>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Ключ</th>
+            <th>Направление</th>
+            <th>Статус</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for k in keys %}
+          <tr>
+            <td><code>{{ k.key }}</code></td>
+            <td>{{ k.direction }}</td>
+            <td>{% if k.is_used %}<span class="badge bg-success">использован</span>{% else %}<span class="badge bg-secondary">не использован</span>{% endif %}</td>
+            <td>
+              <form method="post" action="{{ url_for('delete_activation_key', key_id=k.id) }}" style="display:inline-block;" onsubmit="return confirm('Удалить ключ?');">
+                <button class="btn btn-sm btn-danger" title="Удалить"><i class="fa-solid fa-trash"></i></button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %} 

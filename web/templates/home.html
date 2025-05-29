@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}ITCube Forum - Главная{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <!-- Welcome Section -->
+    <div class="col-12 mb-4">
+        <div class="topic-card text-center shadow-lg animate-fadein">
+            <div class="mb-2">
+                <img src="{{ url_for('static', filename='icons/amsung_oval.png.png') }}" alt="Логотип IT-Cube" style="height: 64px;">
+            </div>
+            <h1 class="display-4 mb-2 fw-bold">Добро пожаловать на Форум IT-Cube62</h1>
+            <p class="lead text-muted mb-0">Образовательная платформа для студентов и преподавателей</p>
+            {% if not user %}
+            <div class="mt-4">
+                <a href="{{ url_for('login') }}" class="btn btn-primary me-2 px-4 py-2">
+                    <i class="fa-solid fa-sign-in-alt"></i> Войти
+                </a>
+                <a href="{{ url_for('register') }}" class="btn btn-outline-primary px-4 py-2">
+                    <i class="fa-solid fa-user-plus"></i> Регистрация
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Stats, Teachers, Admins -->
+    <div class="col-md-4 mb-4">
+        <div class="topic-card text-center animate-fadein">
+            <h3 class="h5 mb-3">
+                <i class="fa-solid fa-chart-line"></i> Статистика
+            </h3>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Онлайн:</span>
+                <span class="badge bg-primary">
+                    <i class="fa-solid fa-users"></i> {{ online_count }}
+                </span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-muted">Всего посещений:</span>
+                <span class="badge bg-secondary">
+                    <i class="fa-solid fa-eye"></i> {{ visits_count }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        {% set users = teachers %}
+        {% set title = "Преподаватели" %}
+        {% set icon = "fa-chalkboard-user" %}
+        {% set role = "Преподаватель" %}
+        {% include "_user_list.html" %}
+    </div>
+    <div class="col-md-4 mb-4">
+        {% set users = admins %}
+        {% set title = "Администраторы" %}
+        {% set icon = "fa-shield-halved" %}
+        {% set role = "Администратор" %}
+        {% include "_user_list.html" %}
+    </div>
+
+    <!-- Features Section -->
+    <div class="col-12">
+        <div class="topic-card animate-fadein">
+            <h3 class="h5 mb-4 text-center">Возможности платформы</h3>
+            <div class="row text-center">
+                <div class="col-md-4 mb-3">
+                    <i class="fa-solid fa-comments fa-3x text-primary mb-2"></i>
+                    <h4 class="h6 mb-1">Форум</h4>
+                    <p class="text-muted small mb-0">Обсуждение тем и обмен опытом</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <i class="fa-solid fa-file-alt fa-3x text-primary mb-2"></i>
+                    <h4 class="h6 mb-1">Материалы</h4>
+                    <p class="text-muted small mb-0">Доступ к учебным материалам</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <i class="fa-solid fa-bell fa-3x text-primary mb-2"></i>
+                    <h4 class="h6 mb-1">Уведомления</h4>
+                    <p class="text-muted small mb-0">Telegram-интеграция</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

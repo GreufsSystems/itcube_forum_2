@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block title %}Проверка браузера{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height:70vh;">
+  <div class="text-center">
+    <img src="{{ url_for('static', filename='gifs/wait.gif') }}" alt="Ожидание" style="width: 100px; margin-bottom: 24px;">
+    <h2 class="mb-3">Проверка браузера...</h2>
+    <p class="text-muted">Пожалуйста, подождите. Проверка безопасности.</p>
+    <div id="check-status" class="mt-3"></div>
+    {% if is_preview %}
+    <div class="mt-4">
+      <a href="{{ url_for('admin_panel', tab='misc') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Вернуться в админ-панель
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+var isPreview = {{ (is_preview|default(false))|tojson }};
+// Функция для установки cookie
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Strict";
+}
+
+// Функция для проверки поддержки cookies
+function checkCookies() {
+    try {
+        setCookie("testCookie", "1", 1);
+        return document.cookie.indexOf("testCookie=") !== -1;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Функция для проверки поддержки JavaScript
+function checkJavaScript() {
+    return typeof window !== 'undefined' && 
+           typeof document !== 'undefined' && 
+           typeof navigator !== 'undefined';
+}
+
+// Функция для проверки поддержки localStorage
+function checkLocalStorage() {
+    try {
+        localStorage.setItem('test', 'test');
+        localStorage.removeItem('test');
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Функция для проверки поддержки sessionStorage
+function checkSessionStorage() {
+    try {
+        sessionStorage.setItem('test', 'test');
+        sessionStorage.removeItem('test');
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Функция для получения информации о браузере
+function getBrowserInfo() {
+    const userAgent = navigator.userAgent;
+    const browserInfo = {
+        userAgent: userAgent,
+        language: navigator.language,
+        platform: navigator.platform,
+        screenWidth: window.screen.width,
+        screenHeight: window.screen.height,
+        colorDepth: window.screen.colorDepth,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        cookiesEnabled: navigator.cookieEnabled,
+        localStorageEnabled: checkLocalStorage(),
+        sessionStorageEnabled: checkSessionStorage(),
+        timestamp: Date.now()
+    };
+    return browserInfo;
+}
+
+// Функция для генерации токена безопасности
+function generateSecurityToken() {
+    const timestamp = Date.now();
+    const random = Math.random().toString(36).substring(2);
+    const browserInfo = getBrowserInfo();
+    const tokenData = {
+        timestamp: timestamp,
+        random: random,
+        browserInfo: browserInfo
+    };
+    return btoa(JSON.stringify(tokenData));
+}
+
+// Функция для отображения статуса проверки
+function updateStatus(message, isError = false) {
+    const statusDiv = document.getElementById('check-status');
+    statusDiv.innerHTML = `<p class="${isError ? 'text-danger' : 'text-success'}">${message}</p>`;
+}
+
+// Основная функция проверки
+async function performBrowserCheck() {
+    try {
+        // Проверка JavaScript
+        if (!checkJavaScript()) {
+            throw new Error('JavaScript не поддерживается');
+        }
+        updateStatus('✓ JavaScript поддерживается');
+
+        // Проверка cookies
+        if (!checkCookies()) {
+            throw new Error('Cookies не поддерживаются');
+        }
+        updateStatus('✓ Cookies поддерживаются');
+
+        // Проверка localStorage
+        if (!checkLocalStorage()) {
+            throw new Error('localStorage не поддерживается');
+        }
+        updateStatus('✓ localStorage поддерживается');
+
+        // Проверка sessionStorage
+        if (!checkSessionStorage()) {
+            throw new Error('sessionStorage не поддерживается');
+        }
+        updateStatus('✓ sessionStorage поддерживается');
+
+        // Генерация и сохранение токена
+        const token = generateSecurityToken();
+        setCookie('security_token', token, 1);
+        setCookie('browser_check_complete', 'true', 1);
+        setCookie('session_active', 'true', 1);
+
+        // Отправка информации о браузере на сервер
+        const browserInfo = getBrowserInfo();
+        const response = await fetch('/api/browser-info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(browserInfo)
+        });
+
+        if (!response.ok) {
+            throw new Error('Ошибка при отправке информации о браузере');
+        }
+
+        // Успешное завершение проверки
+        updateStatus('✓ Проверка успешно завершена');
+        
+        // Перенаправление только если это не предпросмотр
+        if (!isPreview) {
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 2000);
+        }
+
+    } catch (error) {
+        updateStatus(`✗ Ошибка: ${error.message}`, true);
+        console.error('Ошибка проверки браузера:', error);
+    }
+}
+
+// Запуск проверки при загрузке страницы
+document.addEventListener('DOMContentLoaded', performBrowserCheck);
+</script>
+{% endblock %} 

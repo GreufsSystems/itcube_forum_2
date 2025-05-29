@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Вход в Форум IT-Cube62{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height:60vh;">
+  <div class="topic-card p-4 animate-fadein" style="max-width:400px;width:100%;">
+    <div class="text-center mb-4">
+      <i class="fa-solid fa-sign-in-alt fa-3x text-primary mb-2"></i>
+      <h2 class="fw-bold mb-2">Вход</h2>
+      <p class="text-muted mb-0">Введите свои данные для входа</p>
+    </div>
+    <form method="post">
+      <div class="mb-3">
+        <label for="username" class="form-label">Логин</label>
+        <input type="text" class="form-control" id="username" name="username" required autofocus value="{{ username|default('') }}">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Пароль</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      {% if tg_code_required %}
+      <div class="mb-3">
+        <label for="tg_code" class="form-label">Код из Telegram</label>
+        <input type="text" class="form-control" id="tg_code" name="tg_code" required>
+        <button type="submit" name="resend" value="1" class="btn btn-link p-0 mt-1">Отправить код повторно</button>
+      </div>
+      {% endif %}
+      <button type="submit" class="btn btn-primary w-100 py-2">Войти</button>
+    </form>
+    <div class="text-center mt-3">
+      <span class="text-muted">Нет аккаунта?</span>
+      <a href="{{ url_for('register') }}">Регистрация</a>
+    </div>
+  </div>
+</div>
+{% endblock %} 

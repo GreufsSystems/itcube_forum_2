@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель модерации</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+    <!-- Если используете FontAwesome или Tabler Icons, подключите их тут -->
+</head>
+<body>
+<div class="moderation-panel-title">Панель модерации</div>
+
+<div class="moderation-filters">
+    <a href="{{ url_for('moderation_panel', filter='topics') }}" class="btn {% if filter == 'topics' %}active{% endif %}">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h14M3 16h14M3 4h14"></path></svg>
+        Темы
+    </a>
+    <a href="{{ url_for('moderation_panel', filter='all') }}" class="btn {% if filter == 'all' %}active{% endif %}">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="8"></circle><path d="M4 10h12"></path></svg>
+        Все
+    </a>
+</div>
+
+<div class="moderation-cards-row">
+    <div class="moderation-card">
+        <div class="card-title">
+            <svg width="22" height="22" fill="none" stroke="#90baff" stroke-width="2"><path d="M7 7h10M7 11h6M5 19V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"></path></svg>
+            Темы на модерацию
+            <span class="badge">{{ topics_count }}</span>
+        </div>
+        <div class="card-content">
+            {% if topics_count == 0 %}
+                <span class="icon-check"><svg width="32" height="32" fill="none" stroke="#22c55e" stroke-width="2"><circle cx="16" cy="16" r="14"></circle><path d="M10 17l4 4 8-8"></path></svg></span>
+                Нет тем, требующих модерации
+            {% else %}
+                <a href="{{ url_for('moderate_topics') }}" class="btn btn-primary">Перейти к модерации</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="moderation-card">
+        <div class="card-title">
+            <svg width="22" height="22" fill="none" stroke="#90baff" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M8 2v4M16 2v4"></path></svg>
+            Файлы на модерацию
+            <span class="badge">{{ files_count }}</span>
+        </div>
+        <div class="card-content">
+            {% if files_count == 0 %}
+                <span class="icon-check"><svg width="32" height="32" fill="none" stroke="#22c55e" stroke-width="2"><circle cx="16" cy="16" r="14"></circle><path d="M10 17l4 4 8-8"></path></svg></span>
+                Нет файлов, требующих модерации
+            {% else %}
+                <a href="{{ url_for('moderate_files') }}" class="btn btn-primary">Перейти к модерации</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="moderation-card" style="margin-bottom:0;">
+    <div class="card-title">
+        <svg width="22" height="22" fill="none" stroke="#90baff" stroke-width="2"><path d="M3 3v18h18"></path><path d="M3 9h12v6"></path></svg>
+        Статистика модерации
+    </div>
+    <div class="moderation-stats">
+        <div class="stat-card">
+            <div class="stat-value">{{ stats.total }}</div>
+            <div class="stat-label">Всего на модерации</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ stats.topics }}</div>
+            <div class="stat-label">Тем на модерации</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ stats.files }}</div>
+            <div class="stat-label">Файлов на модерации</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ stats.approved_today }}</div>
+            <div class="stat-label">Одобрено сегодня</div>
+        </div>
+    </div>
+</div>
+</body>
+</html> 

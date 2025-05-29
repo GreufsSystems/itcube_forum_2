@@ -1,0 +1,39 @@
+{# Навигационные ссылки для меню. Используется в base.html для main-menu и dropdown-menu. #}
+<a class="nav-link" href="{{ url_for('home') }}">
+    <i class="fa-solid fa-home"></i> Домой
+</a>
+{% if user %}
+    <a class="nav-link" href="{{ url_for('forum') }}">
+        <i class="fa-solid fa-comments"></i> Форум
+    </a>
+    <a class="nav-link" href="{{ url_for('chat') }}">
+        <i class="fa-solid fa-robot"></i> Чат с ИИ
+    </a>
+    <a class="nav-link" href="{{ url_for('profile') }}">
+        <i class="fa-solid fa-user"></i> Профиль
+    </a>
+    {% if user.role == 'teacher' %}
+        <a class="nav-link" href="{{ url_for('teacher_panel') }}">
+            <i class="fa-solid fa-chalkboard-user"></i> Панель преподавателя
+        </a>
+    {% endif %}
+    {% if user.role == 'admin' %}
+        <a class="nav-link" href="{{ url_for('admin_panel') }}">
+            <i class="fa-solid fa-shield-halved"></i> Админ-панель
+        </a>
+    {% endif %}
+    {% if user.role in ['admin', 'moderator'] %}
+        <a class="nav-link" href="{{ url_for('moderation_panel') }}">
+            <i class="fa-solid fa-gavel"></i> Модерация
+        </a>
+    {% endif %}
+{% else %}
+    {% if not maintenance_mode %}
+    <a class="nav-link" href="{{ url_for('login') }}">
+        <i class="fa-solid fa-sign-in-alt"></i> Войти
+    </a>
+    <a class="nav-link" href="{{ url_for('register') }}">
+        <i class="fa-solid fa-user-plus"></i> Зарегистрироваться
+    </a>
+    {% endif %}
+{% endif %} 

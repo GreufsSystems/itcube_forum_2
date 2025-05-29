@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Модерация тем{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Модерация тем</h1>
+    
+    {% if topics %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>Направление</th>
+                    <th>Дата создания</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for topic in topics %}
+                <tr>
+                    <td>{{ topic.id }}</td>
+                    <td>
+                        <a href="{{ url_for('moderate_topic_route', topic_id=topic.id) }}" class="text-decoration-none">
+                            {{ topic.title }}
+                        </a>
+                    </td>
+                    <td>{{ topic.first_name }} {{ topic.last_name }}</td>
+                    <td>{{ topic.direction }}</td>
+                    <td>{% if topic.created_at %}{{ topic.created_at|datetimeformat('%d.%m.%Y %H:%M') }}{% else %}-{% endif %}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{{ url_for('moderate_topic_route', topic_id=topic.id) }}" 
+                               class="btn btn-sm btn-primary">
+                                Модерировать
+                            </a>
+                            <a href="{{ url_for('topic_moderation_history', topic_id=topic.id) }}" 
+                               class="btn btn-sm btn-info">
+                                История
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        Нет тем, требующих модерации
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

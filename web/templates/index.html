@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}ITCube Forum - Форум{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 mb-4">
+        <div class="topic-card">
+            <h3 class="h5 mb-3">
+                <i class="fa-solid fa-layer-group"></i> Направления
+            </h3>
+            <div class="list-group list-group-flush rounded-4 shadow-sm direction-list">
+                {% if user and user.role == 'admin' %}
+                <a href="{{ url_for('forum') }}" class="list-group-item list-group-item-action py-3 px-4 fw-semibold d-flex align-items-center gap-2 direction-link {% if not selected_direction %}active{% endif %}">
+                    <i class="fa-solid fa-globe text-muted"></i> <span>Все направления</span>
+                </a>
+                {% endif %}
+                {% for direction in directions %}
+                <a href="{{ url_for('forum', direction=direction) }}" 
+                   class="list-group-item list-group-item-action py-3 px-4 fw-semibold d-flex align-items-center gap-2 direction-link {% if selected_direction == direction %}active{% endif %}">
+                    <i class="fa-solid fa-folder text-primary"></i> <span>{{ direction }}</span>
+                </a>
+        {% endfor %}
+            </div>
+      </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="col-md-9">
+        <!-- Topics -->
+        {% if topics %}
+            {% for topic in topics %}
+            <div class="topic-card mb-3">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="flex-grow-1">
+                        <a href="{{ url_for('view_topic', topic_id=topic.id) }}" class="topic-title">
+                            {{ topic.title }}
+                        </a>
+                        <div class="topic-meta mt-2">
+                            <span class="me-3">
+                                <i class="fa-solid fa-folder"></i> {{ topic.direction }}
+                            </span>
+                            <span class="me-3">
+                                <i class="fa-solid fa-clock"></i> {{ topic.creation_time|datetimeformat }}
+                            </span>
+                            {% if topic.attachments %}
+                            <span>
+                                <i class="fa-solid fa-paperclip"></i> {{ topic.attachments|length }}
+                            </span>
+                            {% endif %}
+            </div>
+          </div>
+                    <div class="ms-3">
+                        <span class="badge bg-primary">
+                            <i class="fa-solid fa-hashtag"></i> {{ topic.number }}
+                        </span>
+      </div>
+    </div>
+  </div>
+            {% endfor %}
+        {% else %}
+            <div class="topic-card">
+                <div class="text-center py-4">
+                    <i class="fa-solid fa-inbox fa-3x text-muted mb-3"></i>
+                    <h3 class="h5 text-muted">Тем пока нет</h3>
+                    {% if user and user.role == 'teacher' %}
+                    <p class="text-muted">Создайте первую тему в вашем направлении</p>
+                    {% endif %}
+    </div>
+  </div>
+        {% endif %}
+
+        <!-- Files -->
+        {% if files %}
+        <div class="topic-card mt-4 bg-dark text-light border-0">
+            <h3 class="h5 mb-3 text-light">
+                <i class="fa-solid fa-file"></i> Файлы
+            </h3>
+            <div class="list-group list-group-flush">
+                {% for file in files %}
+                <div class="d-flex align-items-center bg-light rounded-2 px-3 py-2 mb-2" style="min-height:44px;">
+                            <i class="fa-solid fa-file-alt text-primary me-2"></i>
+                    <span class="flex-grow-1 text-light">{{ file.name }}</span>
+                    <a href="{{ url_for('download_file', filename=file.name) }}" class="text-muted ms-2" title="Скачать">
+                            <i class="fa-solid fa-download"></i>
+                    </a>
+                    </div>
+                {% endfor %}
+    </div>
+  </div>
+        {% endif %}
+</div>
+</div>
+{% endblock %}

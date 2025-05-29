@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block title %}Панель модерации{% endblock %}
+
+{% block content %}
+<style>
+body {
+    background-color: #18191a !important;
+    color: #f5f6fa !important;
+}
+.card, .form-control, .modal-content {
+    background-color: #23272b !important;
+    color: #f5f6fa !important;
+    border-color: #343a40 !important;
+}
+.card-header {
+    background-color: #23272b !important;
+    color: #f5f6fa !important;
+    border-bottom: 1px solid #343a40 !important;
+}
+.btn-primary, .btn-primary:focus {
+    background-color: #2563eb !important;
+    border-color: #2563eb !important;
+}
+.btn-outline-light {
+    color: #f5f6fa !important;
+    border-color: #f5f6fa !important;
+}
+.btn-outline-light:hover {
+    background-color: #f5f6fa !important;
+    color: #18191a !important;
+}
+.badge {
+    font-size: 1em;
+    padding: 0.5em 1em;
+}
+.text-muted {
+    color: #b0b3b8 !important;
+}
+</style>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-light">Панель модерации</h1>
+        <div class="btn-group">
+            <a href="{{ url_for('moderation_topics') }}" class="btn btn-primary">
+                <i class="fas fa-list"></i> Темы
+            </a>
+            <a href="{{ url_for('moderation_panel') }}" class="btn btn-outline-light active">
+                <i class="fas fa-tasks"></i> Все
+            </a>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <!-- Темы на модерацию -->
+        <div class="col-md-6">
+            <div class="card bg-dark text-light border-secondary mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center border-secondary">
+                    <h5 class="card-title mb-0 text-light">
+                        <i class="fas fa-comments"></i> Темы на модерацию
+                    </h5>
+                    <span class="badge bg-primary rounded-pill">{{ topics|length }}</span>
+                </div>
+                <div class="card-body p-0 bg-dark text-light">
+                    {% if topics %}
+                        <div class="list-group list-group-flush">
+                            {% for topic in topics %}
+                                <div class="list-group-item bg-dark text-light border-secondary">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h6 class="mb-0">
+                                            <a href="{{ url_for('moderate_topic_route', topic_id=topic.id) }}" 
+                                               class="text-decoration-none text-light">
+                                                {{ topic.title }}
+                                            </a>
+                                        </h6>
+                                        <small class="text-muted">
+                                            {{ topic.created_at.strftime('%d.%m.%Y %H:%M') }}
+                                        </small>
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="badge bg-secondary">{{ topic.direction_name }}</span>
+                                        <small class="text-muted ms-2">
+                                            Автор: {{ topic.author_name }}
+                                        </small>
+                                    </div>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{{ url_for('moderate_topic_route', topic_id=topic.id) }}" 
+                                           class="btn btn-outline-light">
+                                            <i class="fas fa-gavel"></i> Модерировать
+                                        </a>
+                                        <a href="{{ url_for('topic_moderation_history', topic_id=topic.id) }}" 
+                                           class="btn btn-outline-info">
+                                            <i class="fas fa-history"></i> История
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center p-4">
+                            <i class="fas fa-check-circle text-success fa-2x mb-2"></i>
+                            <p class="text-muted mb-0">Нет тем, требующих модерации</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- Файлы на модерацию -->
+        <div class="col-md-6">
+            <div class="card bg-dark text-light border-secondary mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center border-secondary">
+                    <h5 class="card-title mb-0 text-light">
+                        <i class="fas fa-file"></i> Файлы на модерацию
+                    </h5>
+                    <span class="badge bg-primary rounded-pill">{{ files|length }}</span>
+                </div>
+                <div class="card-body p-0 bg-dark text-light">
+                    {% if files %}
+                        <div class="list-group list-group-flush">
+                            {% for file in files %}
+                                <div class="list-group-item bg-dark text-light border-secondary">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h6 class="mb-0">
+                                            <i class="fas fa-file-alt me-2"></i>
+                                            {{ file.file_name }}
+                                        </h6>
+                                        <small class="text-muted">
+                                            {{ file.created_at.strftime('%d.%m.%Y %H:%M') }}
+                                        </small>
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="badge bg-secondary">{{ file.direction }}</span>
+                                        <small class="text-muted ms-2">
+                                            Автор: {{ file.username }}
+                                        </small>
+                                    </div>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{{ url_for('moderate_file_route', file_id=file.id) }}" 
+                                           class="btn btn-outline-light">
+                                            <i class="fas fa-gavel"></i> Модерировать
+                                        </a>
+                                        <a href="{{ url_for('file_moderation_history', file_id=file.id) }}" 
+                                           class="btn btn-outline-info">
+                                            <i class="fas fa-history"></i> История
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center p-4">
+                            <i class="fas fa-check-circle text-success fa-2x mb-2"></i>
+                            <p class="text-muted mb-0">Нет файлов, требующих модерации</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Статистика модерации -->
+    <div class="card bg-dark text-light border-secondary mb-4">
+        <div class="card-header border-secondary">
+            <h5 class="card-title mb-0 text-light">
+                <i class="fas fa-chart-bar"></i> Статистика модерации
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white mb-2">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">{{ topics|length + files|length }}</h3>
+                            <p class="card-text mb-0">Всего на модерации</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white mb-2">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">{{ topics|length }}</h3>
+                            <p class="card-text mb-0">Тем на модерации</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-dark mb-2">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">{{ files|length }}</h3>
+                            <p class="card-text mb-0">Файлов на модерации</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white mb-2">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">
+                                {% set approved_count = 0 %}
+                                {% for topic in topics %}
+                                    {% if topic.status == 'approved' %}
+                                        {% set approved_count = approved_count + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% for file in files %}
+                                    {% if file.status == 'approved' %}
+                                        {% set approved_count = approved_count + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                                {{ approved_count }}
+                            </h3>
+                            <p class="card-text mb-0">Одобрено сегодня</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

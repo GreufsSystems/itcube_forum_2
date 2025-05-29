@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}Модерация темы #{{ topic.id }}{% endblock %}
+
+{% block content %}
+<style>
+.card.bg-dark, .bg-dark, .form-control.bg-dark {
+    background: #181d23 !important;
+    color: #e6e6e6 !important;
+    border: none;
+}
+.card-header, .card-title, .form-label, .form-control-plaintext, .text-muted {
+    color: #e6e6e6 !important;
+}
+.form-control.bg-dark {
+    border: 1px solid #343a40 !important;
+}
+.badge.bg-warning, .badge.bg-success, .badge.bg-danger {
+    color: #fff !important;
+}
+.btn-outline-success, .btn-outline-danger {
+    background: #232a36 !important;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+.btn-outline-success:active, .btn-outline-success.active, .btn-outline-success:focus {
+    box-shadow: 0 0 8px 2px #4ade80, 0 0 0 2px #22c55e;
+    border-color: #22c55e !important;
+    z-index: 2;
+    background: #22c55e !important;
+    color: #fff !important;
+}
+.btn-outline-danger:active, .btn-outline-danger.active, .btn-outline-danger:focus {
+    box-shadow: 0 0 8px 2px #f87171, 0 0 0 2px #ef4444;
+    border-color: #ef4444 !important;
+    z-index: 2;
+    background: #ef4444 !important;
+    color: #fff !important;
+}
+.list-group-item.bg-dark {
+    background: #232a36 !important;
+    color: #e6e6e6 !important;
+    border: none;
+}
+.btn-check:checked+.btn-outline-success {
+    background: #22c55e !important;
+    color: #fff !important;
+    border-color: #22c55e !important;
+    box-shadow: 0 0 8px 2px #4ade80, 0 0 0 2px #22c55e;
+    z-index: 2;
+}
+.btn-check:checked+.btn-outline-danger {
+    background: #ef4444 !important;
+    color: #fff !important;
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 8px 2px #f87171, 0 0 0 2px #ef4444;
+    z-index: 2;
+}
+</style>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="mb-4 text-light">Модерация темы</h1>
+            <form method="POST" class="needs-validation" novalidate>
+            <div class="card mb-4 bg-dark text-light border-secondary">
+                <div class="card-header border-secondary">
+                        <h5 class="card-title mb-0 text-light">Информация о теме</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                            <label for="title" class="form-label text-light">Название темы</label>
+                            <input type="text" class="form-control bg-dark text-light border-secondary" id="title" name="title" 
+                                   value="{{ topic.title }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="text" class="form-label text-light">Текст темы</label>
+                            <textarea class="form-control bg-dark text-light border-secondary" id="text" name="text" rows="10" 
+                                      required>{{ topic.text }}</textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label text-light">Автор</label>
+                                    <p class="form-control-plaintext">{{ topic.author_name }}</p>
+                                </div>
+                    </div>
+                            <div class="col-md-6">
+                    <div class="mb-3">
+                                    <label class="form-label text-light">Направление</label>
+                                    <p class="form-control-plaintext">{{ topic.direction_name }}</p>
+                                </div>
+                            </div>
+                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                    <div class="mb-3">
+                                    <label class="form-label text-light">Дата создания</label>
+                                    <p class="form-control-plaintext">
+                                        {{ topic.created_at|datetimeformat('%d.%m.%Y %H:%M') }}
+                                    </p>
+                                </div>
+                    </div>
+                            <div class="col-md-6">
+                    <div class="mb-3">
+                                    <label class="form-label text-light">Статус</label>
+                                    <p class="form-control-plaintext">
+                                        <span class="badge bg-warning">На модерации</span>
+                                    </p>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="card mb-4 bg-dark text-light border-secondary">
+                <div class="card-header border-secondary">
+                    <h5 class="card-title mb-0 text-light">Решение модератора</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                            <label class="form-label text-light">Статус модерации</label>
+                        <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="status" id="status_approved" 
+                                       value="approved" required>
+                            <label class="btn btn-outline-success" for="status_approved">
+                                <i class="fas fa-check"></i> Одобрить
+                            </label>
+                                <input type="radio" class="btn-check" name="status" id="status_rejected" 
+                                       value="rejected" required>
+                            <label class="btn btn-outline-danger" for="status_rejected">
+                                <i class="fas fa-times"></i> Отклонить
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                            <label for="comment" class="form-label text-light">Комментарий модератора</label>
+                        <textarea class="form-control bg-dark text-light border-secondary" id="comment" name="comment" rows="3" 
+                                placeholder="При отклонении темы обязательно укажите причину"></textarea>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('moderation_topics') }}" class="btn btn-outline-light">
+                        <i class="fas fa-arrow-left"></i> Назад к списку
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Сохранить решение
+                        </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-dark text-light border-secondary">
+                <div class="card-header border-secondary">
+                    <h5 class="card-title mb-0 text-light">История модерации</h5>
+                </div>
+                <div class="card-body">
+                    {% if history %}
+                        <div class="list-group list-group-flush">
+                            {% for entry in history %}
+                            <div class="list-group-item bg-dark text-light border-secondary">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">
+                                        {% if entry.status == 'approved' %}
+                                            <span class="badge bg-success">Одобрено</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Отклонено</span>
+                                        {% endif %}
+                                    </h6>
+                                    <small class="text-muted">
+                                        {{ entry.created_at|datetimeformat('%d.%m.%Y %H:%M') }}
+                                    </small>
+                                </div>
+                                <p class="mb-1">{{ entry.comment or 'Без комментария' }}</p>
+                                    <small class="text-muted">
+                                    Модератор: {{ entry.moderator_name }}
+                                    </small>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted mb-0">История модерации пуста</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block scripts %}
+<script>
+// Валидация формы
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            // Проверка комментария при отклонении
+            var status = form.querySelector('input[name="status"]:checked')
+            var comment = form.querySelector('#comment')
+            if (status && status.value === 'rejected' && !comment.value.trim()) {
+                event.preventDefault()
+                event.stopPropagation()
+                comment.setCustomValidity('При отклонении темы необходимо указать причину')
+        } else {
+                comment.setCustomValidity('')
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+{% endblock %}
+{% endblock %} 

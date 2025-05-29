@@ -1,0 +1,46 @@
+                    <div class="list-group">
+                        <a href="{{ url_for('admin_users') }}" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                            <i class="fas fa-users"></i> Управление пользователями
+                        </a>
+                        <a href="{{ url_for('admin_keys') }}" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                            <i class="fas fa-key"></i> Управление ключами активации
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-dark text-light border-secondary" data-bs-toggle="collapse" data-bs-target="#miscSection" aria-expanded="false" aria-controls="miscSection">
+                            <i class="fas fa-ellipsis-h"></i> Прочее
+                        </a>
+                    </div>
+                    <div class="collapse" id="miscSection">
+                        <a href="#" class="list-group-item list-group-item-action bg-dark text-light border-secondary" data-bs-toggle="modal" data-bs-target="#maintenanceModal">
+                            <i class="fas fa-tools"></i> Технические работы
+                        </a>
+                    </div>
+
+<!-- Модальное окно для технических работ -->
+<div class="modal fade" id="maintenanceModal" tabindex="-1" aria-labelledby="maintenanceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light border-secondary">
+      <div class="modal-header border-secondary">2
+        <h5 class="modal-title" id="maintenanceModalLabel"><i class="fas fa-tools"></i> Технические работы</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{ url_for('maintenance_mode') }}">
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="maintenance_mode" 
+                   name="maintenance_mode" {% if maintenance_mode %}checked{% endif %}>
+            <label class="form-check-label" for="maintenance_mode">
+              Включить режим технических работ
+            </label>
+          </div>
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            В режиме технических работ платформа будет недоступна для всех, кроме администраторов.
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> 

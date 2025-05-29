@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}История модерации темы #{{ topic.id }}{% endblock %}
+
+{% block content %}
+<style>
+  .card.bg-dark, .bg-dark {
+    background: #181d23 !important;
+    color: #e6e6e6 !important;
+    border: none;
+  }
+  .timeline {
+    position: relative;
+    padding: 1rem 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    height: 100%;
+    width: 2px;
+    background: #232a36;
+  }
+  .timeline-item {
+    position: relative;
+    padding-left: 3rem;
+    padding-bottom: 1.5rem;
+  }
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+  .timeline-marker {
+    position: absolute;
+    left: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: #232a36;
+    border: 2px solid #90baff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .timeline-content {
+    padding: 1rem;
+    background: #232a36;
+    border-radius: 0.25rem;
+    color: #e6e6e6;
+  }
+  .form-control-plaintext, .card-title, .badge, .text-muted {
+    color: #e6e6e6 !important;
+  }
+  .badge.bg-success, .badge.bg-danger, .badge.bg-warning, .badge.bg-primary {
+    color: #fff !important;
+  }
+  .list-group-item {
+    background: #232a36 !important;
+    color: #e6e6e6 !important;
+    border: none;
+  }
+</style>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class="mb-4 text-light">История модерации темы</h1>
+            <div class="card mb-4 bg-dark">
+                <div class="card-header bg-dark">
+                    <h5 class="card-title mb-0 text-light">Информация о теме</h5>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title text-light">{{ topic.title }}</h4>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Автор</label>
+                                <p class="form-control-plaintext">{{ topic.author_name }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Направление</label>
+                                <p class="form-control-plaintext">{{ topic.direction_name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Дата создания</label>
+                                <p class="form-control-plaintext">
+                                    {{ topic.created_at|datetimeformat('%d.%m.%Y %H:%M') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Текущий статус</label>
+                                <p class="form-control-plaintext">
+                                    {% if topic.status == 'approved' %}
+                                        <span class="badge bg-success">Одобрено</span>
+                                    {% elif topic.status == 'rejected' %}
+                                        <span class="badge bg-danger">Отклонено</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">На модерации</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Текст темы</label>
+                        <div class="p-3 rounded bg-secondary bg-opacity-10 text-light">
+                            {{ topic.text|nl2br|safe }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-dark">
+                <div class="card-header bg-dark">
+                    <h5 class="card-title mb-0 text-light">История модерации</h5>
+                </div>
+                <div class="card-body">
+                    {% if history %}
+                        <div class="timeline">
+                            {% for entry in history %}
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    {% if entry.status == 'approved' %}
+                                        <i class="fas fa-check text-success"></i>
+                                    {% else %}
+                                        <i class="fas fa-times text-danger"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h6 class="mb-0">
+                                            {% if entry.status == 'approved' %}
+                                                <span class="badge bg-success">Одобрено</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Отклонено</span>
+                                            {% endif %}
+                                        </h6>
+                                        <small class="text-muted">
+                                            {{ entry.created_at|datetimeformat('%d.%m.%Y %H:%M') }}
+                                        </small>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Модератор:</strong> {{ entry.moderator_name }}
+                                    </div>
+                                    {% if entry.comment %}
+                                    <div class="mb-2">
+                                        <strong>Комментарий:</strong>
+                                        <p class="mb-0">{{ entry.comment }}</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info mb-0 bg-dark text-light border-0">
+                            История модерации пуста
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="{{ url_for('moderation_topics') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Назад к списку
+                </a>
+                {% if topic.status == 'pending' %}
+                <a href="{{ url_for('moderate_topic_route', topic_id=topic.id) }}" 
+                   class="btn btn-primary">
+                    <i class="fas fa-gavel"></i> Модерировать
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-dark">
+                <div class="card-header bg-dark">
+                    <h5 class="card-title mb-0 text-light">Статистика</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            Всего решений
+                            <span class="badge bg-primary rounded-pill">{{ history|length }}</span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            Одобрений
+                            <span class="badge bg-success rounded-pill">
+                                {{ history|selectattr('status', 'equalto', 'approved')|list|length }}
+                            </span>
+                        </div>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            Отклонений
+                            <span class="badge bg-danger rounded-pill">
+                                {{ history|selectattr('status', 'equalto', 'rejected')|list|length }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
