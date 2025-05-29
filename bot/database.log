@@ -21880,3 +21880,40 @@ AttributeError: 'sqlite3.Row' object has no attribute 'get'
 2025-05-24 20:29:12,361 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
 2025-05-24 20:29:22,445 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
 2025-05-24 20:29:32,518 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:46:51,368 - database - INFO - Таблицы для Telegram и users успешно проверены и созданы
+2025-05-29 21:46:51,701 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getMe "HTTP/1.1 200 OK"
+2025-05-29 21:46:51,769 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/deleteWebhook "HTTP/1.1 200 OK"
+2025-05-29 21:46:51,771 - telegram.ext.Application - INFO - Application started
+2025-05-29 21:46:52,817 - database - INFO - Таблицы для Telegram и users успешно проверены и созданы
+2025-05-29 21:46:52,831 - __main__ - INFO - Запуск бота...
+2025-05-29 21:46:52,831 - __main__ - INFO - Бот запущен
+2025-05-29 21:46:52,832 - aiogram.dispatcher - INFO - Start polling
+2025-05-29 21:46:53,084 - aiogram.dispatcher - INFO - Run polling for bot @itcu62rznupload_bot id=7840613067 - 'IT-Cube-RZN - Образовательная платформа\U0001f393'
+2025-05-29 21:47:02,061 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:47:12,162 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:47:22,308 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:47:32,390 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:47:42,461 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:47:52,541 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:48:02,627 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:48:12,713 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:48:22,796 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:48:32,869 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:48:42,959 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:48:53,031 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:49:03,125 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:49:13,711 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:49:24,293 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:49:34,926 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:49:45,743 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:49:56,263 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:50:06,620 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:50:17,338 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:50:27,419 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:50:37,499 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:50:47,576 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:50:57,666 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:51:07,752 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:51:18,059 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:51:28,155 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"
+2025-05-29 21:51:38,306 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot8024104647:AAEnuw-i2mYHTPCCVRKt3DXJKggznMjQUmI/getUpdates "HTTP/1.1 200 OK"

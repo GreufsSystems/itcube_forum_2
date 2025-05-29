@@ -13263,3 +13263,127 @@
 2025-05-24 20:28:52,927 - werkzeug - INFO - 127.0.0.1 - - [24/May/2025 20:28:52] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
 2025-05-24 20:28:52,932 - werkzeug - INFO - 127.0.0.1 - - [24/May/2025 20:28:52] "[36mGET /static/avatars/user_6_avatar.png HTTP/1.1[0m" 304 -
 2025-05-24 20:28:52,932 - werkzeug - INFO - 127.0.0.1 - - [24/May/2025 20:28:52] "[36mGET /static/avatars/user_4_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:46:50,902 - database - INFO - “аблицы дл€ Telegram и users успешно проверены и созданы
+2025-05-29 21:46:52,853 - deepseek_api - INFO - Initializing DeepSeek API singleton instance
+2025-05-29 21:46:52,853 - deepseek_api - INFO - API Key found: Yes
+2025-05-29 21:46:52,853 - deepseek_api - INFO - DeepSeek API client initialized successfully
+2025-05-29 21:46:52,853 - deepseek_api - INFO - DeepSeek API singleton instance created successfully
+2025-05-29 21:46:57,839 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.68.106:80
+2025-05-29 21:46:57,839 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-29 21:46:57,841 - werkzeug - INFO -  * Restarting with stat
+2025-05-29 21:46:58,078 - database - INFO - “аблицы дл€ Telegram и users успешно проверены и созданы
+2025-05-29 21:46:59,748 - deepseek_api - INFO - Initializing DeepSeek API singleton instance
+2025-05-29 21:46:59,748 - deepseek_api - INFO - API Key found: Yes
+2025-05-29 21:46:59,748 - deepseek_api - INFO - DeepSeek API client initialized successfully
+2025-05-29 21:46:59,748 - deepseek_api - INFO - DeepSeek API singleton instance created successfully
+2025-05-29 21:46:59,775 - werkzeug - WARNING -  * Debugger is active!
+2025-05-29 21:46:59,779 - werkzeug - INFO -  * Debugger PIN: 445-552-056
+2025-05-29 21:47:20,529 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_home, direction=None
+2025-05-29 21:47:20,552 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:20] "GET / HTTP/1.1" 200 -
+2025-05-29 21:47:20,717 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:20] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:47:20,721 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:20] "[36mGET /static/avatars/user_4_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:47:20,723 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:20] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:47:20,953 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:20] "[36mGET /static/avatars/user_6_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:47:26,784 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:26] "GET /login HTTP/1.1" 200 -
+2025-05-29 21:47:26,811 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:26] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:47:26,815 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:26] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:47:27,858 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:27] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-29 21:47:27,883 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_home, direction=None
+2025-05-29 21:47:27,889 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:27] "GET / HTTP/1.1" 200 -
+2025-05-29 21:47:27,914 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:27] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:47:27,922 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:27] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:47:27,922 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:27] "[36mGET /static/avatars/user_4_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:47:27,923 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:27] "[36mGET /static/avatars/user_6_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:47:30,590 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:30] "GET /profile HTTP/1.1" 200 -
+2025-05-29 21:47:30,619 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:30] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:47:30,628 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:30] "[36mGET /static/avatars/user_1_avatar.jpg HTTP/1.1[0m" 304 -
+2025-05-29 21:47:30,628 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:30] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:47:35,876 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_forum, direction=None
+2025-05-29 21:47:35,887 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:35] "GET /forum HTTP/1.1" 200 -
+2025-05-29 21:47:35,909 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:35] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:47:35,913 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:35] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:47:37,193 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_forum, direction=Java
+2025-05-29 21:47:37,197 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:37] "GET /forum?direction=Java HTTP/1.1" 200 -
+2025-05-29 21:47:37,225 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:37] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:47:37,225 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:47:37] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:48:20,196 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:20] "GET /topic/18 HTTP/1.1" 200 -
+2025-05-29 21:48:20,221 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:20] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:48:20,226 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:20] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:48:23,179 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:23] "[32mPOST /topic/18/delete HTTP/1.1[0m" 302 -
+2025-05-29 21:48:23,229 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_forum, direction=None
+2025-05-29 21:48:23,233 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:23] "GET /forum HTTP/1.1" 200 -
+2025-05-29 21:48:23,266 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:23] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:48:23,267 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:23] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:48:25,921 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:25] "GET /moderation HTTP/1.1" 200 -
+2025-05-29 21:48:25,944 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:25] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:48:25,949 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:25] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:48:26,931 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:26] "GET /moderation/topics HTTP/1.1" 200 -
+2025-05-29 21:48:26,956 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:26] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:48:26,962 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:26] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:48:29,411 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:29] "GET /profile HTTP/1.1" 200 -
+2025-05-29 21:48:29,436 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:29] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:48:29,443 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:29] "[36mGET /static/avatars/user_1_avatar.jpg HTTP/1.1[0m" 304 -
+2025-05-29 21:48:29,443 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:29] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:48:30,870 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:30] "GET /chat HTTP/1.1" 200 -
+2025-05-29 21:48:30,898 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:30] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:48:30,901 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:48:30] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:14,697 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_home, direction=None
+2025-05-29 21:50:14,703 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:14] "GET / HTTP/1.1" 200 -
+2025-05-29 21:50:14,726 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:14] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:50:14,731 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:14] "[36mGET /static/avatars/user_4_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:14,732 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:14] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:14,738 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:14] "[36mGET /static/avatars/user_6_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:26,231 - database - INFO - “аблицы дл€ Telegram и users успешно проверены и созданы
+2025-05-29 21:50:27,941 - deepseek_api - INFO - Initializing DeepSeek API singleton instance
+2025-05-29 21:50:27,941 - deepseek_api - INFO - API Key found: Yes
+2025-05-29 21:50:27,941 - deepseek_api - INFO - DeepSeek API client initialized successfully
+2025-05-29 21:50:27,941 - deepseek_api - INFO - DeepSeek API singleton instance created successfully
+2025-05-29 21:50:32,926 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.68.106:80
+2025-05-29 21:50:32,927 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-29 21:50:32,930 - werkzeug - INFO -  * Restarting with stat
+2025-05-29 21:50:33,182 - database - INFO - “аблицы дл€ Telegram и users успешно проверены и созданы
+2025-05-29 21:50:34,939 - deepseek_api - INFO - Initializing DeepSeek API singleton instance
+2025-05-29 21:50:34,939 - deepseek_api - INFO - API Key found: Yes
+2025-05-29 21:50:34,939 - deepseek_api - INFO - DeepSeek API client initialized successfully
+2025-05-29 21:50:34,939 - deepseek_api - INFO - DeepSeek API singleton instance created successfully
+2025-05-29 21:50:34,967 - werkzeug - WARNING -  * Debugger is active!
+2025-05-29 21:50:34,971 - werkzeug - INFO -  * Debugger PIN: 445-552-056
+2025-05-29 21:50:35,103 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_home, direction=None
+2025-05-29 21:50:35,125 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:35] "GET / HTTP/1.1" 200 -
+2025-05-29 21:50:35,140 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_home, direction=None
+2025-05-29 21:50:35,144 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:35] "GET / HTTP/1.1" 200 -
+2025-05-29 21:50:35,296 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:35] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:50:35,297 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:35] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:35,299 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:35] "[36mGET /static/avatars/user_4_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:35,306 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:35] "[36mGET /static/avatars/user_6_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:36,605 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:36] "GET /login HTTP/1.1" 200 -
+2025-05-29 21:50:36,632 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:36] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:50:36,640 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:36] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:37,580 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:37] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-29 21:50:37,661 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_home, direction=None
+2025-05-29 21:50:37,666 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:37] "GET / HTTP/1.1" 200 -
+2025-05-29 21:50:37,693 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:37] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:50:37,702 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:37] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:37,702 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:37] "[36mGET /static/avatars/user_4_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:37,703 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:37] "[36mGET /static/avatars/user_6_avatar.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:42,021 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:42] "GET /profile HTTP/1.1" 200 -
+2025-05-29 21:50:42,046 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:42] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:50:42,053 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:42] "[36mGET /static/avatars/user_1_avatar.jpg HTTP/1.1[0m" 304 -
+2025-05-29 21:50:42,054 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:42] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:49,263 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_forum, direction=None
+2025-05-29 21:50:49,272 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:49] "GET /forum HTTP/1.1" 200 -
+2025-05-29 21:50:49,294 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:49] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:50:49,301 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:49] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:50,319 - __main__ - INFO - Forum action logged: ip=127.0.0.1, user_id=None, username=None, action=visit_forum, direction=Java
+2025-05-29 21:50:50,325 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:50] "GET /forum?direction=Java HTTP/1.1" 200 -
+2025-05-29 21:50:50,357 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:50] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:50:50,363 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:50] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
+2025-05-29 21:50:52,460 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:52] "GET /topic/16 HTTP/1.1" 200 -
+2025-05-29 21:50:52,493 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:52] "[36mGET /static/custom.css HTTP/1.1[0m" 304 -
+2025-05-29 21:50:52,500 - werkzeug - INFO - 127.0.0.1 - - [29/May/2025 21:50:52] "[36mGET /static/icons/amsung_oval.png.png HTTP/1.1[0m" 304 -
